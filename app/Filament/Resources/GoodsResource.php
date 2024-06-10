@@ -6,9 +6,13 @@ use App\Filament\Resources\GoodsResource\Pages;
 use App\Filament\Resources\GoodsResource\RelationManagers;
 use App\Models\Goods;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -21,7 +25,7 @@ class GoodsResource extends Resource
 
     protected static ?string $navigationGroup = 'Inventario';
     protected static ?int $navigationSort = 3;
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
     protected static ?string $activeNavigationIcon = 'heroicon-s-archive-box';
 
@@ -29,27 +33,38 @@ class GoodsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('serial_number')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('cne_code')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('brand')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('model')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('location')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('employee_id')
-                    ->required()
-                    ->numeric(),
+                Section::make()
+                    ->schema([
+                        Select::make('employee_id')
+                            ->label('Custodio')
+                            ->relationship('employee', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->columnSpanFull()
+                            ->required(),
+                        TextInput::make('type')
+                            ->label('Tipo')
+                            ->maxLength(255)
+                            ->required(),
+                        TextInput::make('serial_number')
+                            ->label('Serie del Bien')
+                            ->maxLength(100)
+                            ->required(),
+                        TextInput::make('brand')
+                            ->label('Marca')
+                            ->maxLength(100)
+                            ->required(),
+                        TextInput::make('model')
+                            ->label('Modelo')
+                            ->maxLength(100)
+                            ->required(),
+                        TextInput::make('cne_code')
+                            ->label('Código CNE')
+                            ->maxLength(100),
+                        TextInput::make('location')
+                            ->label('Ubicación')
+                            ->maxLength(255),
+                    ])->columns(2)
             ]);
     }
 
@@ -57,35 +72,28 @@ class GoodsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
+                    ->label('Tipo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('serial_number')
+                TextColumn::make('cne_code')
+                    ->label('Código CNE')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('cne_code')
+                TextColumn::make('brand')
+                    ->label('Marca')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('brand')
+                TextColumn::make('model')
+                    ->label('Modelo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('model')
+                TextColumn::make('employee.name')
+                    ->label('Custodio')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('location')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('employee_id')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

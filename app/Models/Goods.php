@@ -10,11 +10,12 @@ class Goods extends Model
     use HasFactory;
 
     protected $fillable = [
+        'employee_id',
         'type',
         'serial_number',
-        'cne_code',
         'brand',
         'model',
+        'cne_code',
         'location',
     ];
 

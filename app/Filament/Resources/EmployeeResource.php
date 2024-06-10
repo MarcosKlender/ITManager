@@ -33,42 +33,40 @@ class EmployeeResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-
                         TextInput::make('name')
-                            ->label('Nombres y Apellidos')
+                            ->label('Apellidos y Nombres')
                             ->maxLength(255)
-                            ->columnSpanFull()
                             ->required(),
                         TextInput::make('identification_number')
                             ->label('Cédula de Identidad')
                             ->unique(ignoreRecord: true)
                             ->maxLength(10)
                             ->required(),
-                        TextInput::make('email')
-                            ->label('Correo Electrónico')
-                            ->suffix('@cne.gob.ec')
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(255)
-                            ->required(),
                         Select::make('department')
+                            ->columnSpanFull()
+                            ->label('Unidad')
                             ->options([
-                                'TICS' => 'TICS',
-                                'Procesos Electorales' => 'Procesos Electorales',
-                                'Talento Humano' => 'Talento Humano',
-                                'Participación Política' => 'Participación Política',
-                                'Comunicación' => 'Comunicación',
-                                'Financiero' => 'Financiero',
-                                'Administrativo' => 'Administrativo',
-                                'Jurídico' => 'Jurídico',
-                                'Planificación' => 'Planificación',
-                                'Dirección' => 'Dirección',
-                                'Secretaría General' => 'Secretaría General',
-                                'Recaudación' => 'Recaudación',
-                                'Guardianía' => 'Guardianía',
-                                'JPE' => 'JPE',
+                                'UNIDAD PROVINCIAL DE SEGURIDAD INFORMATICA Y PROYECTOS TECNOLOGICOS ELECTORALES' => 'UNIDAD PROVINCIAL DE SEGURIDAD INFORMATICA Y PROYECTOS TECNOLOGICOS ELECTORALES',
+                                'UNIDAD TECNICA PROVINCIAL DE PROCESOS ELECTORALES' => 'UNIDAD TECNICA PROVINCIAL DE PROCESOS ELECTORALES',
+                                'UNIDAD PROVINCIAL DE TALENTO HUMANO' => 'UNIDAD PROVINCIAL DE TALENTO HUMANO',
+                                'UNIDAD TECNICA PROVINCIAL DE PARTICIPACION POLITICA' => 'UNIDAD TECNICA PROVINCIAL DE PARTICIPACION POLITICA',
+                                'UNIDAD DE DESARROLLO DE PRODUCTOS Y SERVICIOS INFORMATIVOS ELECTORALES' => 'UNIDAD DE DESARROLLO DE PRODUCTOS Y SERVICIOS INFORMATIVOS ELECTORALES',
+                                'UNIDAD PROVINCIAL FINANCIERA' => 'UNIDAD PROVINCIAL FINANCIERA',
+                                'UNIDAD PROVINCIAL ADMINISTRATIVA' => 'UNIDAD PROVINCIAL ADMINISTRATIVA',
+                                'UNIDAD PROVINCIAL DE ASESORIA JURIDICA' => 'UNIDAD PROVINCIAL DE ASESORIA JURIDICA',
+                                'UNIDAD PROVINCIAL DE GESTION ESTRATEGICA Y PLANIFICACION' => 'UNIDAD PROVINCIAL DE GESTION ESTRATEGICA Y PLANIFICACION',
+                                'DIRECCION PROVINCIAL' => 'DIRECCION PROVINCIAL',
+                                'UNIDAD PROVINCIAL DE SECRETARIA GENERAL' => 'UNIDAD PROVINCIAL DE SECRETARIA GENERAL',
+                                'JUNTA PROVINCIAL ELECTORAL' => 'JUNTA PROVINCIAL ELECTORAL',
                             ])
                             ->native(false)
                             ->searchable()
+                            ->required(),
+                        TextInput::make('email')
+                            ->label('Correo Electrónico')
+                            ->email()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255)
                             ->required(),
                         TextInput::make('phone')
                             ->label('Celular')
@@ -84,15 +82,13 @@ class EmployeeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nombres y Apellidos')
+                    ->label('Apellidos y Nombres')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('identification_number')
                     ->label('Cédula de Identidad')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('department')
-                    ->label('Departamento'),
-                Tables\Columns\TextColumn::make('phone')
-                    ->label('Celular'),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Correo Electrónico'),
             ])
             ->filters([
                 //

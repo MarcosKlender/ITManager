@@ -10,20 +10,30 @@ class Equipment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'employee_id',
         'type',
         'serial_number',
-        'cne_code',
         'brand',
         'model',
+        'status',
+
+        'cne_code',
+        'location',
+        'purchase_date',
+        'price',
+        'provider',
+        'assignment_date',
+        'return_date',
+        'details',
+
+        'os',
         'bios_password',
+        'mac_address',
         'cpu',
         'ram',
+        'gpu',
         'storage',
         'serial_storage',
-        'os',
-        'status',
-        'location',
-        'mac_address',
     ];
 
     public function employee()

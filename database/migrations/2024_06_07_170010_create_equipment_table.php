@@ -12,23 +12,33 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('employee_id')->constrained();
             $table->string('type', 255);
             $table->string('serial_number', 100)->unique();
             $table->string('brand', 100);
             $table->string('model', 100);
             $table->string('status', 50);
+
             $table->string('cne_code', 100)->nullable()->unique();
             $table->string('location', 255)->nullable();
+            $table->string('purchase_date', 50)->nullable();
+            $table->string('price', 25)->nullable();
+            $table->string('provider', 100)->nullable();
+            $table->string('assignment_date', 50)->nullable();
+            $table->string('return_date', 50)->nullable();
+            $table->string('details')->nullable();
+
             $table->string('os', 255)->nullable();
             $table->string('bios_password', 100)->nullable();
+            $table->string('mac_address', 255)->nullable()->unique();
             $table->string('cpu', 255)->nullable();
             $table->string('ram', 255)->nullable();
+            $table->string('gpu', 255)->nullable();
             $table->string('storage', 255)->nullable();
             $table->string('serial_storage', 100)->nullable()->unique();
-            $table->string('mac_address', 255)->nullable()->unique();
-            $table->timestamps();
 
-            $table->foreignId('employee_id')->constrained();
+            $table->timestamps();
         });
     }
 

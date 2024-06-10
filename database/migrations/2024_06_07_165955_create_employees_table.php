@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('identification_number', 10)->unique();
             $table->string('email', 255)->unique();
-            $table->string('department', 50);
+            $table->string('department', 100);
             $table->string('phone', 10);
             $table->timestamps();
         });

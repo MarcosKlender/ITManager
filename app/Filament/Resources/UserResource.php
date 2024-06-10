@@ -20,7 +20,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración';
     protected static ?int $navigationSort = 1;
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $activeNavigationIcon = 'heroicon-s-user';
 
@@ -29,14 +29,16 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nombres')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label('Correo Electrónico')
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
                     ->required()
                     ->maxLength(255),
@@ -48,20 +50,11 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nombres')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Correo Electrónico')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

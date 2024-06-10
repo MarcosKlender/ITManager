@@ -6,12 +6,18 @@ use App\Filament\Resources\EquipmentResource\Pages;
 use App\Filament\Resources\EquipmentResource\RelationManagers;
 use App\Models\Equipment;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PhpParser\Node\Stmt\Label;
 
 class EquipmentResource extends Resource
 {
@@ -20,7 +26,7 @@ class EquipmentResource extends Resource
 
     protected static ?string $navigationGroup = 'Inventario';
     protected static ?int $navigationSort = 2;
-    
+
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';
 
@@ -28,52 +34,104 @@ class EquipmentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('serial_number')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('cne_code')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('brand')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('model')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('bios_password')
-                    ->password()
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('cpu')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ram')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('storage')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('serial_storage')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('os')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('location')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('mac_address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('employee_id')
-                    ->required()
-                    ->numeric(),
+                Tabs::make('Tabs')
+                    ->columnSpanFull()
+                    ->tabs([
+                        Tabs\Tab::make('Datos Obligatorios')
+                            ->icon('heroicon-m-exclamation-circle')
+                            ->schema([
+                                Select::make('employee_id')
+                                    ->label('Custodio')
+                                    ->relationship('employee', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                                TextInput::make('type')
+                                    ->label('Tipo')
+                                    ->maxLength(255)
+                                    ->required(),
+                                TextInput::make('serial_number')
+                                    ->label('Serie del Equipo')
+                                    ->maxLength(100)
+                                    ->required(),
+                                TextInput::make('brand')
+                                    ->label('Marca')
+                                    ->maxLength(100)
+                                    ->required(),
+                                TextInput::make('model')
+                                    ->label('Modelo')
+                                    ->maxLength(100)
+                                    ->required(),
+                                Select::make('status')
+                                    ->label('Estado')
+                                    ->options([
+                                        'BUENO' => 'BUENO',
+                                        'REGULAR' => 'REGULAR',
+                                        'MALO' => 'MALO',
+                                    ])
+                                    ->native(false)
+                                    ->required(),
+                            ]),
+                        Tabs\Tab::make('Datos Administrativos')
+                            ->icon('heroicon-m-archive-box')
+                            ->schema([
+                                TextInput::make('cne_code')
+                                    ->label('Código CNE')
+                                    ->maxLength(100),
+                                TextInput::make('location')
+                                    ->label('Ubicación')
+                                    ->maxLength(255),
+                                DatePicker::make('purchase_date')
+                                    ->label('Fecha de Compra')
+                                    ->format('d/m/Y')
+                                    ->native(false),
+                                TextInput::make('price')
+                                    ->label('Valor de Compra')
+                                    ->maxLength(25),
+                                TextInput::make('provider')
+                                    ->label('Proveedor')
+                                    ->maxLength(100),
+                                DatePicker::make('assignment_date')
+                                    ->label('Fecha de Asignación')
+                                    ->format('d/m/Y')
+                                    ->native(false),
+                                DatePicker::make('return_date')
+                                    ->label('Fecha de Devolución')
+                                    ->format('d/m/Y')
+                                    ->native(false),
+                                TextInput::make('details')
+                                    ->label('Detalles'),
+                            ]),
+                        Tabs\Tab::make('Datos Técnicos')
+                            ->icon('heroicon-m-cpu-chip')
+                            ->schema([
+                                TextInput::make('os')
+                                    ->label('Sistema Operativo')
+                                    ->maxLength(255),
+                                TextInput::make('bios_password')
+                                    ->label('Contraseña BIOS')
+                                    ->maxLength(100),
+                                TextInput::make('mac_address')
+                                    ->label('Dirección MAC')
+                                    ->maxLength(255),
+                                TextInput::make('cpu')
+                                    ->label('CPU')
+                                    ->maxLength(255),
+                                TextInput::make('ram')
+                                    ->label('RAM')
+                                    ->maxLength(255),
+                                TextInput::make('gpu')
+                                    ->label('GPU')
+                                    ->maxLength(255),
+                                TextInput::make('storage')
+                                    ->label('Almacenamiento')
+                                    ->maxLength(255),
+                                TextInput::make('serial_storage')
+                                    ->label('Serie del Almacenamiento')
+                                    ->maxLength(100),
+                            ]),
+                    ])
+                    ->columns(2)
             ]);
     }
 
@@ -81,49 +139,31 @@ class EquipmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('type')
+                TextColumn::make('type')
+                    ->label('Tipo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('serial_number')
+                TextColumn::make('serial_number')
+                    ->label('Serie del Equipo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('cne_code')
+                TextColumn::make('brand')
+                    ->label('Marca')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('brand')
+                TextColumn::make('model')
+                    ->label('Modelo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('model')
+                TextColumn::make('status')
+                    ->label('Estado')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('cpu')
+                TextColumn::make('employee.name')
+                    ->label('Custodio')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ram')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('storage')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('serial_storage')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('os')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('location')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('mac_address')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('employee_id')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
