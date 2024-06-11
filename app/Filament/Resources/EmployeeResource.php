@@ -33,15 +33,6 @@ class EmployeeResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        TextInput::make('name')
-                            ->label('Apellidos y Nombres')
-                            ->maxLength(255)
-                            ->required(),
-                        TextInput::make('identification_number')
-                            ->label('Cédula de Identidad')
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(10)
-                            ->required(),
                         Select::make('department')
                             ->columnSpanFull()
                             ->label('Unidad')
@@ -61,6 +52,15 @@ class EmployeeResource extends Resource
                             ])
                             ->native(false)
                             ->searchable()
+                            ->required(),
+                        TextInput::make('name')
+                            ->label('Apellidos y Nombres')
+                            ->maxLength(255)
+                            ->required(),
+                        TextInput::make('identification_number')
+                            ->label('Cédula de Identidad')
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(10)
                             ->required(),
                         TextInput::make('email')
                             ->label('Correo Electrónico')
@@ -107,7 +107,8 @@ class EmployeeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\EquipmentRelationManager::class,
+            RelationManagers\GoodsRelationManager::class,
         ];
     }
 

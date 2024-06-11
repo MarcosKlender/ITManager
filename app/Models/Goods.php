@@ -15,6 +15,8 @@ class Goods extends Model
         'serial_number',
         'brand',
         'model',
+        'status',
+        
         'cne_code',
         'location',
     ];

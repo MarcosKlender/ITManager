@@ -1,36 +1,28 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\EmployeeResource\RelationManagers;
 
-use App\Filament\Resources\EquipmentResource\Pages;
-use App\Filament\Resources\EquipmentResource\RelationManagers;
-use App\Models\Equipment;
 use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use PhpParser\Node\Stmt\Label;
 
-class EquipmentResource extends Resource
+class EquipmentRelationManager extends RelationManager
 {
-    protected static ?string $model = Equipment::class;
+    protected static string $relationship = 'equipment';
+
+    protected static ?string $title = 'Equipos';
     protected static ?string $modelLabel = 'equipo';
 
-    protected static ?string $navigationGroup = 'Inventario';
-    protected static ?int $navigationSort = 2;
-
-    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -139,9 +131,10 @@ class EquipmentResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('serial_number')
             ->columns([
                 TextColumn::make('type')
                     ->label('Tipo')
@@ -165,30 +158,18 @@ class EquipmentResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListEquipment::route('/'),
-            'create' => Pages\CreateEquipment::route('/create'),
-            'edit' => Pages\EditEquipment::route('/{record}/edit'),
-        ];
     }
 }

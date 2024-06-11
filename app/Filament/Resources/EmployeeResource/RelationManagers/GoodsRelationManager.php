@@ -1,35 +1,28 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\EmployeeResource\RelationManagers;
 
-use App\Filament\Resources\GoodsResource\Pages;
-use App\Filament\Resources\GoodsResource\RelationManagers;
-use App\Models\Goods;
 use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GoodsResource extends Resource
+class GoodsRelationManager extends RelationManager
 {
-    protected static ?string $model = Goods::class;
+    protected static string $relationship = 'goods';
+
+    protected static ?string $title = 'Bienes';
     protected static ?string $modelLabel = 'bien';
     protected static ?string $pluralModelLabel = 'bienes';
 
-    protected static ?string $navigationGroup = 'Inventario';
-    protected static ?int $navigationSort = 3;
-
-    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-archive-box';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -78,9 +71,10 @@ class GoodsResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('serial_number')
             ->columns([
                 TextColumn::make('type')
                     ->label('Tipo')
@@ -104,30 +98,18 @@ class GoodsResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
+                // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListGoods::route('/'),
-            'create' => Pages\CreateGoods::route('/create'),
-            'edit' => Pages\EditGoods::route('/{record}/edit'),
-        ];
     }
 }
