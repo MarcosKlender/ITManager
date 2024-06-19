@@ -6,9 +6,12 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,20 +31,27 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->label('Nombres')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                Select::make('roles')
+                    ->label('Rol')
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->native(false)
+                    ->required(),
+                TextInput::make('email')
                     ->label('Correo Electrónico')
                     ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('password')
+                    ->maxLength(255)
+                    ->required(),
+                TextInput::make('password')
                     ->label('Contraseña')
                     ->password()
-                    ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->visibleOn('create')
+                    ->required(),
             ]);
     }
 
@@ -49,10 +59,18 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Nombres')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('roles.name')
+                    ->label('Rol')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Admin' => 'success',
+                        'Editor' => 'warning',
+                        'Lector' => 'danger',
+                    }),
+                TextColumn::make('email')
                     ->label('Correo Electrónico')
                     ->searchable(),
             ])
@@ -60,7 +78,8 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -18,6 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,12 +61,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentGeneralSettingsPlugin::make()
-                    // ->canAccess(fn () => auth()->user()->id === 1)
+                    ->canAccess(fn () => auth()->user()->roles->first()->name === 'Admin')
                     ->setSort(3)
                     ->setIcon('heroicon-o-cog-6-tooth')
                     ->setNavigationGroup('Administración')
                     ->setTitle('Configuración')
                     ->setNavigationLabel('Configuración'),
+                // FilamentSpatieRolesPermissionsPlugin::make(),
             ]);
     }
 }
