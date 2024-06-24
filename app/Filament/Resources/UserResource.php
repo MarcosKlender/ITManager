@@ -66,9 +66,9 @@ class UserResource extends Resource
                     ->label('Rol')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'Admin' => 'success',
-                        'Editor' => 'warning',
-                        'Lector' => 'danger',
+                        'ADMIN' => 'success',
+                        'EDITOR' => 'warning',
+                        'LECTOR' => 'danger',
                     }),
                 TextColumn::make('email')
                     ->label('Correo Electrónico')
@@ -82,9 +82,9 @@ class UserResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

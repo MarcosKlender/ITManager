@@ -32,6 +32,7 @@ class RoleResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
                     ->label('Nombre')
                     ->maxLength(255)
                     ->columnSpanFull()
@@ -57,9 +58,9 @@ class RoleResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

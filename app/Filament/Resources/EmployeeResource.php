@@ -54,6 +54,7 @@ class EmployeeResource extends Resource
                             ->searchable()
                             ->required(),
                         TextInput::make('name')
+                            ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
                             ->label('Apellidos y Nombres')
                             ->maxLength(255)
                             ->required(),
@@ -98,9 +99,9 @@ class EmployeeResource extends Resource
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

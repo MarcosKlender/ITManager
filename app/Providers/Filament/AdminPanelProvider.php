@@ -61,7 +61,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentGeneralSettingsPlugin::make()
-                    ->canAccess(fn () => auth()->user()->roles->first()->name === 'Admin')
+                    ->canAccess(fn () => auth()->user()->roles->first()->name === 'ADMIN')
                     ->setSort(3)
                     ->setIcon('heroicon-o-cog-6-tooth')
                     ->setNavigationGroup('Administración')
