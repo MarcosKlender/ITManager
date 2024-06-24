@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,14 +55,16 @@ class EmployeeResource extends Resource
                             ->searchable()
                             ->required(),
                         TextInput::make('name')
-                            ->dehydrateStateUsing(fn (string $state): string => strtoupper($state))
                             ->label('Apellidos y Nombres')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('identification_number')
                             ->label('Cédula de Identidad')
                             ->unique(ignoreRecord: true)
-                            ->maxLength(10)
+                            ->mask('9999999999')
+                            ->length(10)
                             ->required(),
                         TextInput::make('email')
                             ->label('Correo Electrónico')
@@ -71,8 +74,8 @@ class EmployeeResource extends Resource
                             ->required(),
                         TextInput::make('phone')
                             ->label('Celular')
-                            ->tel()
-                            ->maxLength(10)
+                            ->mask('9999999999')
+                            ->length(10)
                             ->required(),
                     ])->columns(2)
             ]);

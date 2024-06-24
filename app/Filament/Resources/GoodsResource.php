@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -43,19 +44,27 @@ class GoodsResource extends Resource
                             ->required(),
                         TextInput::make('type')
                             ->label('Tipo')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('serial_number')
                             ->label('Serie del Bien')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->unique(ignoreRecord: true)
                             ->maxLength(100)
                             ->required(),
                         TextInput::make('brand')
                             ->label('Marca')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(100)
                             ->required(),
                         TextInput::make('model')
                             ->label('Modelo')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(100)
                             ->required(),
                         Select::make('status')
@@ -69,10 +78,14 @@ class GoodsResource extends Resource
                             ->required(),
                         TextInput::make('cne_code')
                             ->label('Código CNE')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->unique(ignoreRecord: true)
                             ->maxLength(100),
                         TextInput::make('location')
                             ->label('Ubicación')
+                            ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                            ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255),
                     ])->columns(2)
             ]);

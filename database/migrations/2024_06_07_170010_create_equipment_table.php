@@ -27,11 +27,11 @@ return new class extends Migration
             $table->string('provider', 100)->nullable();
             $table->string('assignment_date', 50)->nullable();
             $table->string('return_date', 50)->nullable();
-            $table->string('details')->nullable();
+            $table->string('details', 255)->nullable();
 
             $table->string('os', 255)->nullable();
             $table->string('bios_password', 100)->nullable();
-            $table->string('mac_address', 255)->nullable()->unique();
+            $table->string('mac_address', 17)->nullable()->unique();
             $table->string('cpu', 255)->nullable();
             $table->string('ram', 255)->nullable();
             $table->string('gpu', 255)->nullable();
