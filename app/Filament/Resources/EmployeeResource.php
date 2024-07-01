@@ -56,24 +56,28 @@ class EmployeeResource extends Resource
                             ->required(),
                         TextInput::make('name')
                             ->label('Apellidos y Nombres')
+                            ->placeholder('APELLIDOS PRIMERO')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('identification_number')
                             ->label('Cédula de Identidad')
+                            ->placeholder('1234567890')
                             ->unique(ignoreRecord: true)
                             ->mask('9999999999')
                             ->length(10)
                             ->required(),
                         TextInput::make('email')
                             ->label('Correo Electrónico')
+                            ->placeholder('correo@cne.gob.ec')
                             ->email()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('phone')
                             ->label('Celular')
+                            ->placeholder('1234567890')
                             ->mask('9999999999')
                             ->length(10)
                             ->required(),

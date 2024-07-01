@@ -49,12 +49,14 @@ class EquipmentResource extends Resource
                                     ->required(),
                                 TextInput::make('type')
                                     ->label('Tipo')
+                                    ->placeholder('TIPO DE EQUIPO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255)
                                     ->required(),
                                 TextInput::make('serial_number')
                                     ->label('Serie del Equipo')
+                                    ->placeholder('NKP324HJ006L00027')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)
@@ -62,12 +64,14 @@ class EquipmentResource extends Resource
                                     ->required(),
                                 TextInput::make('brand')
                                     ->label('Marca')
+                                    ->placeholder('NOMBRE DE LA MARCA')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100)
                                     ->required(),
                                 TextInput::make('model')
                                     ->label('Modelo')
+                                    ->placeholder('NOMBRE DEL MODELO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100)
@@ -87,37 +91,42 @@ class EquipmentResource extends Resource
                             ->schema([
                                 TextInput::make('cne_code')
                                     ->label('Código CNE')
+                                    ->placeholder('16165830')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(100),
                                 TextInput::make('location')
                                     ->label('Ubicación')
+                                    ->placeholder('LUGAR DONDE SE ENCUENTRA EL EQUIPO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 DatePicker::make('purchase_date')
                                     ->label('Fecha de Compra')
-                                    ->format('d/m/Y')
-                                    ->native(false),
+                                    ->format('d/m/Y'),
                                 TextInput::make('price')
                                     ->label('Valor de Compra')
-                                    ->maxLength(25),
+                                    ->placeholder('500.00')
+                                    ->numeric()
+                                    ->prefix('$')
+                                    ->minValue(1)
+                                    ->maxValue(10000),
                                 TextInput::make('provider')
                                     ->label('Proveedor')
+                                    ->placeholder('NOMBRE DEL PROVEEDOR')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100),
                                 DatePicker::make('assignment_date')
                                     ->label('Fecha de Asignación')
-                                    ->format('d/m/Y')
-                                    ->native(false),
+                                    ->format('d/m/Y'),
                                 DatePicker::make('return_date')
                                     ->label('Fecha de Devolución')
-                                    ->format('d/m/Y')
-                                    ->native(false),
+                                    ->format('d/m/Y'),
                                 TextInput::make('details')
                                     ->label('Detalles')
+                                    ->placeholder('OBSERVACIONES DEL EQUIPO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
@@ -127,39 +136,47 @@ class EquipmentResource extends Resource
                             ->schema([
                                 TextInput::make('os')
                                     ->label('Sistema Operativo')
+                                    ->placeholder('WINDOWS 10 PRO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('bios_password')
                                     ->label('Contraseña BIOS')
+                                    ->placeholder('SI NO TIENE CONTRASEÑA DEJE VACÍO ESTE CAMPO')
                                     ->maxLength(100),
                                 TextInput::make('mac_address')
                                     ->label('Dirección MAC')
+                                    ->placeholder('A1:B2:C3:D4:E5:F6')
                                     ->unique(ignoreRecord: true)
                                     ->mask('**:**:**:**:**:**')
                                     ->macAddress(),
                                 TextInput::make('cpu')
                                     ->label('CPU')
+                                    ->placeholder('INTER CORE I7 8700K')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('ram')
                                     ->label('RAM')
+                                    ->placeholder('2 X 8 GB DDR4')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('gpu')
                                     ->label('GPU')
+                                    ->placeholder('GRAFICOS INTEGRADOS')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('storage')
                                     ->label('Almacenamiento')
+                                    ->placeholder('KINGSTON SSD 480 GB')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('serial_storage')
                                     ->label('Serie del Almacenamiento')
+                                    ->placeholder('SBF42RE4')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)

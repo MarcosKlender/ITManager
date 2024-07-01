@@ -44,12 +44,14 @@ class GoodsResource extends Resource
                             ->required(),
                         TextInput::make('type')
                             ->label('Tipo')
+                            ->placeholder('TIPO DEL BIEN')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255)
                             ->required(),
                         TextInput::make('serial_number')
                             ->label('Serie del Bien')
+                            ->placeholder('NKP324HJ006L00027')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->unique(ignoreRecord: true)
@@ -57,12 +59,14 @@ class GoodsResource extends Resource
                             ->required(),
                         TextInput::make('brand')
                             ->label('Marca')
+                            ->placeholder('NOMBRE DE LA MARCA')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(100)
                             ->required(),
                         TextInput::make('model')
                             ->label('Modelo')
+                            ->placeholder('NOMBRE DEL MODELO')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(100)
@@ -78,12 +82,14 @@ class GoodsResource extends Resource
                             ->required(),
                         TextInput::make('cne_code')
                             ->label('Código CNE')
+                            ->placeholder('16165830')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->unique(ignoreRecord: true)
                             ->maxLength(100),
                         TextInput::make('location')
                             ->label('Ubicación')
+                            ->placeholder('LUGAR DONDE SE ENCUENTRA EL BIEN')
                             ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                             ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                             ->maxLength(255),
