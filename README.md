@@ -65,13 +65,12 @@ This project is a comprehensive web application developed using the TALL Stack (
 
 1. Clone this repo to your computer:
    ```sh
-   git clone git@github.com:MarcosKlender/RegistroMJRV.git
+   git clone git@github.com:MarcosKlender/ITManager.git
    ```
 2. Install dependencies with:
    ```sh
-   cd RegistroMJRV
+   cd ITManager
    composer install
-   npm install
    ```
 3. Use this to create your own `.env` file:
    ```sh
@@ -85,7 +84,6 @@ This project is a comprehensive web application developed using the TALL Stack (
 5. Launch both local servers and start using the app:
    ```sh
    php artisan serve
-   npm run dev
    ```
 
 <p align="right"><a href="#readme-top">Back to top ⬆️</a></p>
