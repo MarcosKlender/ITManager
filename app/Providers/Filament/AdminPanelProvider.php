@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->profile()
             ->breadcrumbs(false)
             ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Amber,
             ])

@@ -17,6 +17,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ImportAction;
 use App\Filament\Imports\GoodsImporter;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
+use App\Filament\Exports\GoodsExporter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -103,8 +106,12 @@ class GoodsResource extends Resource
     {
         return $table
             ->headerActions([
+                ExportAction::make()
+                    ->exporter(GoodsExporter::class)
+                    ->icon('heroicon-o-arrow-down-tray'),
                 ImportAction::make()
                     ->importer(GoodsImporter::class)
+                    ->icon('heroicon-o-arrow-up-tray')
                     ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
             ])
             ->columns([
