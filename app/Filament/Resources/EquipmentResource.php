@@ -16,6 +16,8 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ImportAction;
+use App\Filament\Imports\EquipmentImporter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Stmt\Label;
@@ -190,6 +192,11 @@ class EquipmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(EquipmentImporter::class)
+                    ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
+            ])
             ->columns([
                 TextColumn::make('type')
                     ->label('Tipo')
