@@ -14,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ImportAction;
+use App\Filament\Imports\EmployeeImporter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -88,6 +90,11 @@ class EmployeeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(EmployeeImporter::class)
+                    ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
+            ])
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Apellidos y Nombres')
