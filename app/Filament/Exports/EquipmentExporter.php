@@ -2,7 +2,7 @@
 
 namespace App\Filament\Exports;
 
-use App\Models\Goods;
+use App\Models\Equipment;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
@@ -10,9 +10,9 @@ use OpenSpout\Common\Entity\Style\Style;
 use OpenSpout\Common\Entity\Style\Color;
 use OpenSpout\Common\Entity\Style\CellAlignment;
 
-class GoodsExporter extends Exporter
+class EquipmentExporter extends Exporter
 {
-    protected static ?string $model = Goods::class;
+    protected static ?string $model = Equipment::class;
 
     public static function getColumns(): array
     {
@@ -25,7 +25,7 @@ class GoodsExporter extends Exporter
             ExportColumn::make('type')
                 ->label('Tipo'),
             ExportColumn::make('serial_number')
-                ->label('Serie del Bien'),
+                ->label('Serie del Equipo'),
             ExportColumn::make('brand')
                 ->label('Marca'),
             ExportColumn::make('model')
@@ -36,6 +36,34 @@ class GoodsExporter extends Exporter
                 ->label('Código CNE'),
             ExportColumn::make('location')
                 ->label('Ubicación'),
+            ExportColumn::make('purchase_date')
+                ->label('Fecha de Compra'),
+            ExportColumn::make('price')
+                ->label('Valor de Compra'),
+            ExportColumn::make('provider')
+                ->label('Proveedor'),
+            ExportColumn::make('assignment_date')
+                ->label('Fecha de Asignación'),
+            ExportColumn::make('return_date')
+                ->label('Fecha de Devolución'),
+            ExportColumn::make('details')
+                ->label('Detalles'),
+            ExportColumn::make('os')
+                ->label('Sistema Operativo'),
+            ExportColumn::make('bios_password')
+                ->label('Contraseña BIOS'),
+            ExportColumn::make('mac_address')
+                ->label('Dirección MAC'),
+            ExportColumn::make('cpu')
+                ->label('CPU'),
+            ExportColumn::make('ram')
+                ->label('RAM'),
+            ExportColumn::make('gpu')
+                ->label('GPU'),
+            ExportColumn::make('storage')
+                ->label('Almacenamiento'),
+            ExportColumn::make('serial_storage')
+                ->label('Serie del Almacenamiento'),
             ExportColumn::make('created_at')
                 ->enabledByDefault(false)
                 ->label('Fecha de Creación'),
@@ -60,7 +88,7 @@ class GoodsExporter extends Exporter
     {
         $date = date("d-m-Y_H-i-s");
 
-        return "{$export->getKey()}_Bienes_{$date}";
+        return "{$export->getKey()}_Equipos_{$date}";
     }
 
     public function getXlsxHeaderCellStyle(): ?Style

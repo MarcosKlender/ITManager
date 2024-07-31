@@ -18,6 +18,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ImportAction;
 use App\Filament\Imports\EquipmentImporter;
+use Filament\Tables\Actions\ExportAction;
+use App\Filament\Exports\EquipmentExporter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Stmt\Label;
@@ -193,8 +195,12 @@ class EquipmentResource extends Resource
     {
         return $table
             ->headerActions([
+                ExportAction::make()
+                    ->exporter(EquipmentExporter::class)
+                    ->icon('heroicon-o-arrow-down-tray'),
                 ImportAction::make()
                     ->importer(EquipmentImporter::class)
+                    ->icon('heroicon-o-arrow-up-tray')
                     ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
             ])
             ->columns([

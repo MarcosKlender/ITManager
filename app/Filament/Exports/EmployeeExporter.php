@@ -2,7 +2,7 @@
 
 namespace App\Filament\Exports;
 
-use App\Models\Goods;
+use App\Models\Employee;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
@@ -10,9 +10,9 @@ use OpenSpout\Common\Entity\Style\Style;
 use OpenSpout\Common\Entity\Style\Color;
 use OpenSpout\Common\Entity\Style\CellAlignment;
 
-class GoodsExporter extends Exporter
+class EmployeeExporter extends Exporter
 {
-    protected static ?string $model = Goods::class;
+    protected static ?string $model = Employee::class;
 
     public static function getColumns(): array
     {
@@ -20,22 +20,16 @@ class GoodsExporter extends Exporter
             ExportColumn::make('id')
                 ->enabledByDefault(false)
                 ->label('ID'),
-            ExportColumn::make('employee.name')
-                ->label('Custodio'),
-            ExportColumn::make('type')
-                ->label('Tipo'),
-            ExportColumn::make('serial_number')
-                ->label('Serie del Bien'),
-            ExportColumn::make('brand')
-                ->label('Marca'),
-            ExportColumn::make('model')
-                ->label('Modelo'),
-            ExportColumn::make('status')
-                ->label('Estado'),
-            ExportColumn::make('cne_code')
-                ->label('Código CNE'),
-            ExportColumn::make('location')
-                ->label('Ubicación'),
+            ExportColumn::make('name')
+                ->label('Apellidos y Nombres'),
+            ExportColumn::make('identification_number')
+                ->label('Cédula de Identidad'),
+            ExportColumn::make('email')
+                ->label('Correo Electrónico'),
+            ExportColumn::make('department')
+                ->label('Unidad'),
+            ExportColumn::make('phone')
+                ->label('Celular'),
             ExportColumn::make('created_at')
                 ->enabledByDefault(false)
                 ->label('Fecha de Creación'),
@@ -60,7 +54,7 @@ class GoodsExporter extends Exporter
     {
         $date = date("d-m-Y_H-i-s");
 
-        return "{$export->getKey()}_Bienes_{$date}";
+        return "{$export->getKey()}_Funcionarios_{$date}";
     }
 
     public function getXlsxHeaderCellStyle(): ?Style

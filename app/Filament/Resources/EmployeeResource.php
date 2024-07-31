@@ -16,6 +16,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ImportAction;
 use App\Filament\Imports\EmployeeImporter;
+use Filament\Tables\Actions\ExportAction;
+use App\Filament\Exports\EmployeeExporter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -91,8 +93,12 @@ class EmployeeResource extends Resource
     {
         return $table
             ->headerActions([
+                ExportAction::make()
+                    ->exporter(EmployeeExporter::class)
+                    ->icon('heroicon-o-arrow-down-tray'),
                 ImportAction::make()
                     ->importer(EmployeeImporter::class)
+                    ->icon('heroicon-o-arrow-up-tray')
                     ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
             ])
             ->columns([
