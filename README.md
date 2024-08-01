@@ -90,10 +90,11 @@ This project is a comprehensive web application developed using the TALL Stack (
 
 ## Screenshots
 
-![Register](https://placehold.co/1920x1280/webp)
+![Employees](https://i.ibb.co/hBRVMmf/ITManager-Funcionarios.webp)
 
-![Register](https://placehold.co/1920x1280/webp)
+![Equipment](https://i.ibb.co/74MVjg6/ITManager-Equipos.webp)
 
+![Goods](https://i.ibb.co/NWh1Rsk/ITManager-Bienes.webp)
 
 ## License
 
