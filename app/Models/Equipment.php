@@ -40,4 +40,19 @@ class Equipment extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($model) {
+            $fieldsToNullify = ['cne_code', 'mac_address', 'serial_storage'];
+
+            foreach ($fieldsToNullify as $field) {
+                if ($model->$field === '') {
+                    $model->$field = null;
+                }
+            }
+        });
+    }
 }
