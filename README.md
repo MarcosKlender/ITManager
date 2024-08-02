@@ -19,7 +19,7 @@ Modern web app for equipment management and tracking, using the TALL Stack.
 
 </div>
 
-![Register](https://placehold.co/1920x1280/webp)
+![Dashboard](https://i.ibb.co/JyBVQCN/ITManager-Escritorio.webp)
 
 
 ## Table of Contents
