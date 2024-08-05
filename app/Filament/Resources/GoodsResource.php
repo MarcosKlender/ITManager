@@ -133,6 +133,7 @@ class GoodsResource extends Resource
                     ->label('Custodio')
                     ->searchable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

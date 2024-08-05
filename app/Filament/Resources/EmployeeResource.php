@@ -111,6 +111,7 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('Correo Electrónico'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

@@ -140,7 +140,7 @@ class EquipmentResource extends Resource
                             ->schema([
                                 TextInput::make('os')
                                     ->label('Sistema Operativo')
-                                    ->placeholder('WINDOWS 10 PRO')
+                                    ->placeholder('W10 PRO')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
@@ -156,7 +156,7 @@ class EquipmentResource extends Resource
                                     ->macAddress(),
                                 TextInput::make('cpu')
                                     ->label('CPU')
-                                    ->placeholder('INTER CORE I7 8700K')
+                                    ->placeholder('INTEL CORE I7 8700K')
                                     ->dehydrateStateUsing(fn ($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
@@ -223,6 +223,7 @@ class EquipmentResource extends Resource
                     ->label('Custodio')
                     ->searchable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
