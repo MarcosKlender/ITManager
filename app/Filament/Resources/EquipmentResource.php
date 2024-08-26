@@ -210,6 +210,9 @@ class EquipmentResource extends Resource
                 TextColumn::make('serial_number')
                     ->label('Serie del Equipo')
                     ->searchable(),
+                TextColumn::make('cne_code')
+                    ->label('Código CNE')
+                    ->searchable(),
                 TextColumn::make('brand')
                     ->label('Marca')
                     ->searchable(),
