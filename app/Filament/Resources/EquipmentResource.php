@@ -20,6 +20,8 @@ use Filament\Tables\Actions\ImportAction;
 use App\Filament\Imports\EquipmentImporter;
 use Filament\Tables\Actions\ExportAction;
 use App\Filament\Exports\EquipmentExporter;
+use App\Models\Employee;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Stmt\Label;
@@ -54,14 +56,14 @@ class EquipmentResource extends Resource
                                 TextInput::make('type')
                                     ->label('Tipo')
                                     ->placeholder('TIPO DE EQUIPO')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255)
                                     ->required(),
                                 TextInput::make('serial_number')
                                     ->label('Serie del Equipo')
                                     ->placeholder('NKP324HJ006L00027')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(100)
@@ -69,14 +71,14 @@ class EquipmentResource extends Resource
                                 TextInput::make('brand')
                                     ->label('Marca')
                                     ->placeholder('NOMBRE DE LA MARCA')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100)
                                     ->required(),
                                 TextInput::make('model')
                                     ->label('Modelo')
                                     ->placeholder('NOMBRE DEL MODELO')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100)
                                     ->required(),
@@ -96,14 +98,14 @@ class EquipmentResource extends Resource
                                 TextInput::make('cne_code')
                                     ->label('Código CNE')
                                     ->placeholder('16165830')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(100),
                                 TextInput::make('location')
                                     ->label('Ubicación')
                                     ->placeholder('LUGAR DONDE SE ENCUENTRA EL EQUIPO')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 DatePicker::make('purchase_date')
@@ -119,7 +121,7 @@ class EquipmentResource extends Resource
                                 TextInput::make('provider')
                                     ->label('Proveedor')
                                     ->placeholder('NOMBRE DEL PROVEEDOR')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(100),
                                 DatePicker::make('assignment_date')
@@ -131,7 +133,7 @@ class EquipmentResource extends Resource
                                 TextInput::make('details')
                                     ->label('Detalles')
                                     ->placeholder('OBSERVACIONES DEL EQUIPO')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                             ]),
@@ -141,7 +143,7 @@ class EquipmentResource extends Resource
                                 TextInput::make('os')
                                     ->label('Sistema Operativo')
                                     ->placeholder('W10 PRO')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('bios_password')
@@ -157,31 +159,31 @@ class EquipmentResource extends Resource
                                 TextInput::make('cpu')
                                     ->label('CPU')
                                     ->placeholder('INTEL CORE I7 8700K')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('ram')
                                     ->label('RAM')
                                     ->placeholder('2 X 8 GB DDR4')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('gpu')
                                     ->label('GPU')
                                     ->placeholder('GRAFICOS INTEGRADOS')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('storage')
                                     ->label('Almacenamiento')
                                     ->placeholder('KINGSTON SSD 480 GB')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->maxLength(255),
                                 TextInput::make('serial_storage')
                                     ->label('Serie del Almacenamiento')
                                     ->placeholder('SBF42RE4')
-                                    ->dehydrateStateUsing(fn ($state) => strtoupper($state))
+                                    ->dehydrateStateUsing(fn($state) => strtoupper($state))
                                     ->extraInputAttributes(['onkeyup' => RawJs::make('this.value = this.value.toUpperCase();')])
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(100),
@@ -238,6 +240,25 @@ class EquipmentResource extends Resource
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
+                Tables\Actions\BulkAction::make("PDF")
+                    ->label('Generar Acta ER')
+                    ->icon('heroicon-s-document-text')
+                    ->form([
+                        Select::make('receiver')
+                            ->label('Funcionario/a quien recibe')
+                            ->relationship('employee', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                    ])
+                    ->action(function ($records, $data) {
+                        $receiver = Employee::find($data['receiver']);
+                        $pdf = Pdf::loadView('pdf.example', compact('records', 'receiver'));
+                        
+                        return response()->streamDownload(function () use ($pdf) {
+                            echo $pdf->stream();
+                        }, 'ActaER.pdf');
+                    }),
             ]);
     }
 
