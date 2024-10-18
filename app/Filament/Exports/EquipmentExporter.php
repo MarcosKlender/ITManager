@@ -20,6 +20,8 @@ class EquipmentExporter extends Exporter
             ExportColumn::make('id')
                 ->enabledByDefault(false)
                 ->label('ID'),
+            ExportColumn::make('employee.department')
+                ->label('Unidad'),
             ExportColumn::make('employee.name')
                 ->label('Custodio'),
             ExportColumn::make('type')

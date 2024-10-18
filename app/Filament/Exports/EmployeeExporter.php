@@ -20,14 +20,14 @@ class EmployeeExporter extends Exporter
             ExportColumn::make('id')
                 ->enabledByDefault(false)
                 ->label('ID'),
+            ExportColumn::make('department')
+                ->label('Unidad'),
             ExportColumn::make('name')
                 ->label('Apellidos y Nombres'),
             ExportColumn::make('identification_number')
                 ->label('Cédula de Identidad'),
             ExportColumn::make('email')
                 ->label('Correo Electrónico'),
-            ExportColumn::make('department')
-                ->label('Unidad'),
             ExportColumn::make('phone')
                 ->label('Celular'),
             ExportColumn::make('created_at')
