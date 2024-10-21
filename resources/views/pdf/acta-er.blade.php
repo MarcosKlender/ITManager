@@ -6,6 +6,29 @@
     <title>Acta Entrega Recepción</title>
 
     <style>
+        .header-table {
+            border: none;
+            width: 100%;
+        }
+
+        .header-table td {
+            border: none;
+        }
+
+        .logo {
+            text-align: right;
+        }
+
+        .header {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -37,6 +60,30 @@
 </head>
 
 <body>
+    <table class="header-table">
+        <tr>
+            <td>
+                <p>Consejo Nacional Electoral de Santo Domingo de los Tsáchilas<br>
+                    Unidad de Seguridad Informática y Proyectos Tecnológicos Electorales</p>
+            </td>
+            <td class="logo">
+                <img src="{{ public_path('images/cne-logo.png') }}" alt="Logo CNE" height="80px">
+            </td>
+        </tr>
+    </table>
+
+    <p class="header">Santo Domingo, {{ $currentDate }}<br>
+        Acta Nro. {{ $fileName }}</p>
+
+    <br>
+    <p class="title">ACTA ENTREGA - RECEPCIÓN</p>
+    <br>
+
+    <p>
+        En las instalaciones de la Delegación Provincial Electoral de Santo Domingo de los Tsáchilas
+        se procede a la suscripción de la presente acta donde consta la entrega de acuerdo al siguiente detalle:
+    </p>
+
     <table>
         <thead>
             <tr>
@@ -59,6 +106,11 @@
             @endforeach
         </tbody>
     </table>
+
+    <p>
+        Para constancia de lo actuado en fe de conformidad y aceptación, suscriben la presente acta en dos ejemplares de
+        igual tenor y efecto las personas que han intervenido en esta diligencia:
+    </p>
 
     <table class="signature-table">
         <tr>

@@ -22,6 +22,7 @@ use Filament\Tables\Actions\ExportAction;
 use App\Filament\Exports\EquipmentExporter;
 use App\Models\Employee;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use PhpParser\Node\Stmt\Label;
@@ -253,13 +254,19 @@ class EquipmentResource extends Resource
                     ])
                     ->action(function ($records, $data) {
                         $receiver = Employee::find($data['receiver']);
-                        $pdf = Pdf::loadView('pdf.example', compact('records', 'receiver'));
-                        
+                        $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
+                        $currentYear = Carbon::now()->year;
+                        $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-ER';
+
+                        $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'receiver', 'currentDate', 'fileName'));
+
+
                         return response()->streamDownload(function () use ($pdf) {
                             echo $pdf->stream();
-                        }, 'ActaER.pdf');
+                        }, $fileName . '.pdf');
                     }),
-            ]);
+            ])
+            ->deselectAllRecordsWhenFiltered(false);
     }
 
     public static function getRelations(): array
