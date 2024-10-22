@@ -252,19 +252,31 @@ class EquipmentResource extends Resource
                             ->preload()
                             ->required(),
                     ])
+                    ->modalHeading('Generar Acta Entrega - Recepción')
+                    ->modalSubmitActionLabel('Descargar')
+                    ->modalWidth('lg')
                     ->action(function ($records, $data) {
+                        // Almacena los equipos que están a nombre del Responsable de la Unidad
+                        $filteredRecords = $records->filter(fn($record) => $record->employee_id == 14);
+
                         $receiver = Employee::find($data['receiver']);
                         $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
                         $currentYear = Carbon::now()->year;
                         $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-ER';
 
-                        $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'receiver', 'currentDate', 'fileName'));
-
+                        // Si hay equipos a nombre del Responsable, genera el Acta de Entrega
+                        if ($filteredRecords->isNotEmpty()) {
+                            $pdf = Pdf::loadView('pdf.acta-entrega', compact('filteredRecords', 'receiver', 'currentDate', 'fileName'));
+                        } else {
+                            // Si hay equipos a nombre de otros funcionarios, genera el Acta de Devolución
+                            $pdf = Pdf::loadView('pdf.acta-devolucion', compact('records', 'receiver', 'currentDate', 'fileName'));
+                        }
 
                         return response()->streamDownload(function () use ($pdf) {
                             echo $pdf->stream();
                         }, $fileName . '.pdf');
-                    }),
+                    })
+                    ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
             ])
             ->deselectAllRecordsWhenFiltered(false);
     }
