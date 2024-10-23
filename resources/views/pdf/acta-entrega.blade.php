@@ -95,7 +95,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($filteredRecords as $record)
+            @foreach ($records as $record)
                 <tr>
                     <td>{{ $record->type }}</td>
                     <td>{{ $record->serial_number }}</td>
