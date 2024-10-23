@@ -6,6 +6,7 @@ use App\Filament\Resources\DeliverEquipmentResource\Pages;
 use App\Filament\Resources\DeliverEquipmentResource\RelationManagers;
 use App\Models\Employee;
 use App\Models\Equipment;
+use App\Models\PdfCounter;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Filament\Forms;
@@ -95,8 +96,12 @@ class DeliverEquipmentResource extends Resource
                         $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
                         $currentYear = Carbon::now()->year;
 
+                        $pdfCounter = PdfCounter::where('type', 'entrega_equipos')->first();
+                        $pdfCounter->increment('counter');
+                        $currentCounter = $pdfCounter->counter;
+
                         $isDeliver = true;
-                        $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-E';
+                        $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-' . $currentCounter . '-EE';
 
                         $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'boss', 'employee', 'currentDate', 'isDeliver', 'fileName'));
 
