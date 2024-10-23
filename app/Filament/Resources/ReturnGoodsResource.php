@@ -28,8 +28,8 @@ class ReturnGoodsResource extends Resource
     protected static ?string $navigationGroup = 'Devolución';
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-down';
-    protected static ?string $activeNavigationIcon = 'heroicon-o-document-arrow-down';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-arrow-down-on-square';
 
     public static function form(Form $form): Form
     {

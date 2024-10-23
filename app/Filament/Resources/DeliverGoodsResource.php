@@ -28,8 +28,8 @@ class DeliverGoodsResource extends Resource
     protected static ?string $navigationGroup = 'Entrega';
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
-    protected static ?string $activeNavigationIcon = 'heroicon-o-document-arrow-up';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-on-square';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-arrow-up-on-square';
 
     public static function form(Form $form): Form
     {

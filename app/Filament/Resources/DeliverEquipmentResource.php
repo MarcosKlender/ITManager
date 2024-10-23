@@ -27,8 +27,8 @@ class DeliverEquipmentResource extends Resource
     protected static ?string $navigationGroup = 'Entrega';
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-document-arrow-up';
+    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-up';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-cloud-arrow-up';
 
     public static function form(Form $form): Form
     {

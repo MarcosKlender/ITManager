@@ -27,8 +27,8 @@ class ReturnEquipmentResource extends Resource
     protected static ?string $navigationGroup = 'Devolución';
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-down';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-document-arrow-down';
+    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-down';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-cloud-arrow-down';
 
     public static function form(Form $form): Form
     {
