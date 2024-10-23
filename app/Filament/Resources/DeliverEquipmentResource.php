@@ -73,9 +73,6 @@ class DeliverEquipmentResource extends Resource
                 //
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
                 Tables\Actions\BulkAction::make("entrega")
                     ->label('Generar Acta Entrega')
                     ->icon('heroicon-s-document-text')

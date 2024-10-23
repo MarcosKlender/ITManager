@@ -73,9 +73,6 @@ class ReturnEquipmentResource extends Resource
                 //
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
                 Tables\Actions\BulkAction::make("devolucion")
                     ->label('Generar Acta Devolución')
                     ->icon('heroicon-s-document-text')
