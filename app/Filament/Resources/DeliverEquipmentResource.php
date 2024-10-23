@@ -41,7 +41,7 @@ class DeliverEquipmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('employee_id', 14))
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('employee_id', env('BOSS_ID')))
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('type')
@@ -80,7 +80,7 @@ class DeliverEquipmentResource extends Resource
                     ->label('Generar Acta Entrega')
                     ->icon('heroicon-s-document-text')
                     ->form([
-                        Select::make('receiver')
+                        Select::make('employee')
                             ->label('Funcionario/a quien recibe')
                             ->relationship('employee', 'name')
                             ->searchable()
@@ -90,12 +90,15 @@ class DeliverEquipmentResource extends Resource
                     ->modalSubmitActionLabel('Descargar')
                     ->modalWidth('lg')
                     ->action(function ($records, $data) {
-                        $receiver = Employee::find($data['receiver']);
+                        $boss = Employee::find(env('BOSS_ID'));
+                        $employee = Employee::find($data['employee']);
+
                         $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
                         $currentYear = Carbon::now()->year;
+
                         $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-E';
 
-                        $pdf = Pdf::loadView('pdf.acta-entrega', compact('records', 'receiver', 'currentDate', 'fileName'));
+                        $pdf = Pdf::loadView('pdf.acta-entrega', compact('records', 'boss', 'employee', 'currentDate', 'fileName'));
 
                         return response()->streamDownload(function () use ($pdf) {
                             echo $pdf->stream();
