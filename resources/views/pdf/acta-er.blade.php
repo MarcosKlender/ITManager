@@ -112,22 +112,41 @@
         igual tenor y efecto las personas que han intervenido en esta diligencia:
     </p>
 
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div class="signature-line"></div>
-                <p><strong>ENTREGA</strong></p>
-                <p>{{ $boss->name }}</p>
-                <p>CI: {{ $boss->identification_number }}</p>
-            </td>
-            <td>
-                <div class="signature-line"></div>
-                <p><strong>RECIBE</strong></p>
-                <p>{{ $employee->name }}</p>
-                <p>CI: {{ $employee->identification_number }}</p>
-            </td>
-        </tr>
-    </table>
+    @if ($isDeliver)
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <div class="signature-line"></div>
+                    <p><strong>ENTREGA</strong></p>
+                    <p>{{ $boss->name }}</p>
+                    <p>CI: {{ $boss->identification_number }}</p>
+                </td>
+                <td>
+                    <div class="signature-line"></div>
+                    <p><strong>RECIBE</strong></p>
+                    <p>{{ $employee->name }}</p>
+                    <p>CI: {{ $employee->identification_number }}</p>
+                </td>
+            </tr>
+        </table>
+    @else
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <div class="signature-line"></div>
+                    <p><strong>ENTREGA</strong></p>
+                    <p>{{ $employee->name }}</p>
+                    <p>CI: {{ $employee->identification_number }}</p>
+                </td>
+                <td>
+                    <div class="signature-line"></div>
+                    <p><strong>RECIBE</strong></p>
+                    <p>{{ $boss->name }}</p>
+                    <p>CI: {{ $boss->identification_number }}</p>
+                </td>
+            </tr>
+        </table>
+    @endif
 </body>
 
 </html>

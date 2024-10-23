@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DeliverEquipmentResource\Pages;
 use App\Filament\Resources\DeliverEquipmentResource\RelationManagers;
-use App\Models\DeliverEquipment;
 use App\Models\Employee;
 use App\Models\Equipment;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -96,9 +95,10 @@ class DeliverEquipmentResource extends Resource
                         $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
                         $currentYear = Carbon::now()->year;
 
+                        $isDeliver = true;
                         $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-E';
 
-                        $pdf = Pdf::loadView('pdf.acta-entrega', compact('records', 'boss', 'employee', 'currentDate', 'fileName'));
+                        $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'boss', 'employee', 'currentDate', 'isDeliver', 'fileName'));
 
                         return response()->streamDownload(function () use ($pdf) {
                             echo $pdf->stream();

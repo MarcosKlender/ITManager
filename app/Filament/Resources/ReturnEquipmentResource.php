@@ -4,11 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReturnEquipmentResource\Pages;
 use App\Filament\Resources\ReturnEquipmentResource\RelationManagers;
+use App\Models\Employee;
 use App\Models\Equipment;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -35,21 +40,72 @@ class ReturnEquipmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->whereNot('employee_id', env('BOSS_ID')))
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                //
+                TextColumn::make('type')
+                    ->label('Tipo')
+                    ->searchable(),
+                TextColumn::make('serial_number')
+                    ->label('Serie del Equipo')
+                    ->searchable(),
+                TextColumn::make('cne_code')
+                    ->label('Código CNE')
+                    ->searchable(),
+                TextColumn::make('brand')
+                    ->label('Marca')
+                    ->searchable(),
+                TextColumn::make('model')
+                    ->label('Modelo')
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->label('Estado')
+                    ->searchable(),
+                TextColumn::make('employee.name')
+                    ->label('Custodio')
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+                Tables\Actions\BulkAction::make("devolucion")
+                    ->label('Generar Acta Devolución')
+                    ->icon('heroicon-s-document-text')
+                    ->form([
+                        Select::make('employee')
+                            ->label('Funcionario/a quien devuelve')
+                            ->relationship('employee', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                    ])
+                    ->modalSubmitActionLabel('Descargar')
+                    ->modalWidth('lg')
+                    ->action(function ($records, $data) {
+                        $boss = Employee::find(env('BOSS_ID'));
+                        $employee = Employee::find($data['employee']);
+
+                        $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
+                        $currentYear = Carbon::now()->year;
+
+                        $isDeliver = false;
+                        $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-D';
+
+                        $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'boss', 'employee', 'currentDate', 'isDeliver', 'fileName'));
+
+                        return response()->streamDownload(function () use ($pdf) {
+                            echo $pdf->stream();
+                        }, $fileName . '.pdf');
+                    })
+            ])
+            ->deselectAllRecordsWhenFiltered(false);
     }
 
     public static function getPages(): array
