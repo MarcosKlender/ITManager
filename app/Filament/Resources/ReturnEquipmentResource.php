@@ -105,6 +105,11 @@ class ReturnEquipmentResource extends Resource
 
                         $pdf = Pdf::loadView('pdf.acta-er', compact('records', 'boss', 'employee', 'currentDate', 'isDeliver', 'fileName'));
 
+                        foreach ($records as $record) {
+                            $record->employee_id = $boss->id;
+                            $record->save();
+                        }
+
                         return response()->streamDownload(function () use ($pdf) {
                             echo $pdf->stream();
                         }, $fileName . '.pdf');
