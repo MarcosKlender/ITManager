@@ -20,12 +20,7 @@ use Filament\Tables\Actions\ImportAction;
 use App\Filament\Imports\EquipmentImporter;
 use Filament\Tables\Actions\ExportAction;
 use App\Filament\Exports\EquipmentExporter;
-use App\Models\Employee;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use PhpParser\Node\Stmt\Label;
 
 class EquipmentResource extends Resource
 {
@@ -206,6 +201,7 @@ class EquipmentResource extends Resource
                     ->icon('heroicon-o-arrow-up-tray')
                     ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
             ])
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('type')
                     ->label('Tipo')
@@ -229,7 +225,6 @@ class EquipmentResource extends Resource
                     ->label('Custodio')
                     ->searchable(),
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
@@ -241,44 +236,7 @@ class EquipmentResource extends Resource
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
-                Tables\Actions\BulkAction::make("PDF")
-                    ->label('Generar Acta ER')
-                    ->icon('heroicon-s-document-text')
-                    ->form([
-                        Select::make('receiver')
-                            ->label('Funcionario/a quien recibe')
-                            ->relationship('employee', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                    ])
-                    ->modalHeading('Generar Acta Entrega - Recepción')
-                    ->modalSubmitActionLabel('Descargar')
-                    ->modalWidth('lg')
-                    ->action(function ($records, $data) {
-                        // Almacena los equipos que están a nombre del Responsable de la Unidad
-                        $filteredRecords = $records->filter(fn($record) => $record->employee_id == 14);
-
-                        $receiver = Employee::find($data['receiver']);
-                        $currentDate = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
-                        $currentYear = Carbon::now()->year;
-                        $fileName = 'CNE-DPSDT-ITM-' . $currentYear . '-ER';
-
-                        // Si hay equipos a nombre del Responsable, genera el Acta de Entrega
-                        if ($filteredRecords->isNotEmpty()) {
-                            $pdf = Pdf::loadView('pdf.acta-entrega', compact('filteredRecords', 'receiver', 'currentDate', 'fileName'));
-                        } else {
-                            // Si hay equipos a nombre de otros funcionarios, genera el Acta de Devolución
-                            $pdf = Pdf::loadView('pdf.acta-devolucion', compact('records', 'receiver', 'currentDate', 'fileName'));
-                        }
-
-                        return response()->streamDownload(function () use ($pdf) {
-                            echo $pdf->stream();
-                        }, $fileName . '.pdf');
-                    })
-                    ->hidden(auth()->user()->roles->first()->name != 'ADMIN')
-            ])
-            ->deselectAllRecordsWhenFiltered(false);
+            ]);
     }
 
     public static function getRelations(): array
