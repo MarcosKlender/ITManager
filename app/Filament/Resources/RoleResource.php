@@ -22,7 +22,7 @@ class RoleResource extends Resource
     protected static ?string $pluralModelLabel = 'roles';
 
     protected static ?string $navigationGroup = 'Administración';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 9;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
     protected static ?string $activeNavigationIcon = 'heroicon-s-shield-check';

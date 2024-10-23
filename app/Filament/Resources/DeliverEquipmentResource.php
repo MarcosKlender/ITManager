@@ -24,7 +24,7 @@ class DeliverEquipmentResource extends Resource
     protected static ?string $model = Equipment::class;
     protected static ?string $modelLabel = 'equipo';
 
-    protected static ?string $navigationGroup = 'Actas de Entrega';
+    protected static ?string $navigationGroup = 'Entrega';
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';

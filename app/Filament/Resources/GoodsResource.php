@@ -29,7 +29,7 @@ class GoodsResource extends Resource
     protected static ?string $pluralModelLabel = 'bienes';
 
     protected static ?string $navigationGroup = 'Inventario';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
     protected static ?string $activeNavigationIcon = 'heroicon-s-archive-box';
