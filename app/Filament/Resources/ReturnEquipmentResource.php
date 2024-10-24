@@ -30,6 +30,11 @@ class ReturnEquipmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-down';
     protected static ?string $activeNavigationIcon = 'heroicon-s-cloud-arrow-down';
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->roles->first()->name == 'ADMIN';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

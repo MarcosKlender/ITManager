@@ -31,6 +31,11 @@ class DeliverGoodsResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-arrow-up-on-square';
     protected static ?string $activeNavigationIcon = 'heroicon-s-arrow-up-on-square';
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->roles->first()->name == 'ADMIN';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
