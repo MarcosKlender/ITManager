@@ -27,10 +27,10 @@ class ReturnEquipmentResource extends Resource
     protected static ?string $navigationGroup = 'Devolución';
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-down';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-cloud-arrow-down';
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
         return auth()->user()->roles->first()->name == 'ADMIN';
     }

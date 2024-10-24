@@ -28,7 +28,7 @@ class EquipmentResource extends Resource
     protected static ?string $modelLabel = 'equipo';
 
     protected static ?string $navigationGroup = 'Inventario';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';

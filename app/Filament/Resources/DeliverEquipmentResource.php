@@ -27,10 +27,10 @@ class DeliverEquipmentResource extends Resource
     protected static ?string $navigationGroup = 'Entrega';
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-up';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-cloud-arrow-up';
-
-    public static function canViewAny(): bool
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';
+    
+    public static function canAccess(): bool
     {
         return auth()->user()->roles->first()->name == 'ADMIN';
     }

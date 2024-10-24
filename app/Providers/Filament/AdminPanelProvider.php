@@ -30,8 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('/')
             ->login()
             ->profile()
+            ->topNavigation()
             ->breadcrumbs(false)
-            ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications()
             ->colors([
                 'primary' => Color::Amber,

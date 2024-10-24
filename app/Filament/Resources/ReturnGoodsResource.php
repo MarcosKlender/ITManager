@@ -28,10 +28,10 @@ class ReturnGoodsResource extends Resource
     protected static ?string $navigationGroup = 'Devolución';
     protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-arrow-down-on-square';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-archive-box';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
         return auth()->user()->roles->first()->name == 'ADMIN';
     }

@@ -28,10 +28,10 @@ class DeliverGoodsResource extends Resource
     protected static ?string $navigationGroup = 'Entrega';
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-on-square';
-    protected static ?string $activeNavigationIcon = 'heroicon-s-arrow-up-on-square';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-archive-box';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
         return auth()->user()->roles->first()->name == 'ADMIN';
     }
