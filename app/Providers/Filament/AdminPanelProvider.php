@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Pages\Auth\CustomLogin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,11 +29,14 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('/')
             ->path('/')
-            ->login()
+            ->login(CustomLogin::class)
             ->profile()
             ->topNavigation()
             ->breadcrumbs(false)
             ->databaseNotifications()
+            ->favicon(asset('images/cne-logo-square.png'))
+            ->brandLogo(asset('images/cne-logo.png'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -62,7 +66,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentGeneralSettingsPlugin::make()
-                    ->canAccess(fn () => auth()->user()->roles->first()->name === 'ADMIN')
+                    ->canAccess(fn() => auth()->user()->roles->first()->name === 'ADMIN')
                     ->setSort(10)
                     ->setIcon('heroicon-o-cog-6-tooth')
                     ->setNavigationGroup('Administración')
