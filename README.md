@@ -76,12 +76,13 @@ This project is a comprehensive web application developed using the TALL Stack (
    ```sh
    cp .env.example .env
    ```
-4. Update the `.env` file with your database credentials and run:
+4. Update the `.env` file with your database credentials and the `BOSS_ID`.
+5. Now run the following commands:
    ```sh
    php artisan migrate --seed
    php artisan key:generate
    ```
-5. Launch both local servers and start using the app:
+6. Launch both local servers and start using the app:
    ```sh
    php artisan serve
    ```

@@ -89,6 +89,7 @@
             <tr>
                 <th>TIPO</th>
                 <th>SERIAL</th>
+                <th>CÓDIGO</th>
                 <th>MARCA</th>
                 <th>MODELO</th>
                 <th>ESTADO</th>
@@ -99,6 +100,7 @@
                 <tr>
                     <td>{{ $record->type }}</td>
                     <td>{{ $record->serial_number }}</td>
+                    <td>{{ $record->cne_code }}</td>
                     <td>{{ $record->brand }}</td>
                     <td>{{ $record->model }}</td>
                     <td>{{ $record->status }}</td>
