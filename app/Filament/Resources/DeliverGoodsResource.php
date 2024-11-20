@@ -117,6 +117,7 @@ class DeliverGoodsResource extends Resource
                             echo $pdf->stream();
                         }, $fileName . '.pdf');
                     })
+                    ->deselectRecordsAfterCompletion(true)
             ])
             ->deselectAllRecordsWhenFiltered(false);
     }

@@ -29,7 +29,7 @@ class DeliverEquipmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $activeNavigationIcon = 'heroicon-s-computer-desktop';
-    
+
     public static function canAccess(): bool
     {
         return auth()->user()->roles->first()->name == 'ADMIN';
@@ -116,6 +116,7 @@ class DeliverEquipmentResource extends Resource
                             echo $pdf->stream();
                         }, $fileName . '.pdf');
                     })
+                    ->deselectRecordsAfterCompletion(true)
             ])
             ->deselectAllRecordsWhenFiltered(false);
     }

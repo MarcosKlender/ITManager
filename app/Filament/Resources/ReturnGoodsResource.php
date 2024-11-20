@@ -117,6 +117,7 @@ class ReturnGoodsResource extends Resource
                             echo $pdf->stream();
                         }, $fileName . '.pdf');
                     })
+                    ->deselectRecordsAfterCompletion(true)
             ])
             ->deselectAllRecordsWhenFiltered(false);
     }
