@@ -44,6 +44,7 @@ class EquipmentResource extends Resource
                             ->icon('heroicon-m-exclamation-circle')
                             ->schema([
                                 Select::make('employee_id')
+                                    ->default(env('BOSS_ID'))
                                     ->label('Custodio')
                                     ->relationship('employee', 'name')
                                     ->searchable()
